@@ -1,0 +1,115 @@
+/* Liquid glass theme: warm ink, ember and amber. Loads after style.css.
+   Content and layout are untouched; this file only changes color, glass, texture and motion. */
+:root{
+  --bg:#0e0a0b; --black:#0e0a0b; --surface:#17100f;
+  --white:#f6efe7; --muted:#b0a69b;
+  --purple:#e9b04b; --purple-light:#f0c673; --cyan:#e9b04b; --pink:#b8283f;
+  --border:rgba(255,236,220,.14);
+  --glass:rgba(255,236,220,.06);
+}
+a:focus-visible,button:focus-visible{outline:2px solid var(--purple);outline-offset:3px}
+
+/* ---------- background light and texture ---------- */
+.background{background:var(--bg)}
+.orb{filter:blur(90px);opacity:.5}
+.orb-1{width:520px;height:520px;background:#b8283f}
+.orb-2{width:440px;height:440px;background:#e9b04b;opacity:.26}
+.orb-3{width:480px;height:480px;background:#1a5a63}
+.noise{opacity:.06}
+body::after{            /* fine film grain over everything, glass included */
+  content:"";position:fixed;inset:0;z-index:99990;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px}
+
+/* ---------- glass surfaces ---------- */
+.navbar,.available-badge,.btn-outline,.floating-tag,.code-card,.stat-card,.tech-card,
+.experience-card,.project-card,.education-content,.marquee-wrapper,.project-overlay a{
+  position:relative;
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(18px) saturate(1.7);
+  backdrop-filter:blur(18px) saturate(1.7);
+  border:0;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -1px 0 rgba(255,255,255,.05),
+             inset 0 0 24px rgba(255,255,255,.04),0 18px 40px -14px rgba(0,0,0,.6);
+}
+.navbar,.floating-tag,.code-card{position:fixed}           /* keep original positioning */
+.floating-tag,.code-card{position:absolute}
+.stat-card,.tech-card,.education-content{overflow:hidden}
+
+/* bright rim light */
+.navbar::before,.available-badge::before,.btn-outline::before,.floating-tag::before,.code-card::before,
+.stat-card::before,.tech-card::before,.experience-card::before,.project-card::before,
+.education-content::before,.project-overlay a::before{
+  content:"";position:absolute;inset:0;width:auto;height:auto;right:auto;top:auto;border-radius:inherit;padding:1px;
+  background:linear-gradient(140deg,rgba(255,255,255,.5),rgba(255,255,255,0) 32%,rgba(255,255,255,0) 68%,rgba(255,255,255,.22));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;z-index:2}
+
+/* liquid sheen that sweeps across a card on hover */
+.stat-card::after,.tech-card::after,.experience-card::after,.project-card::after,.education-content::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:3;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.16) 50%,transparent 65%);
+  transform:translateX(-120%);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.stat-card:hover::after,.tech-card:hover::after,.experience-card:hover::after,
+.project-card:hover::after,.education-content:hover::after{transform:translateX(120%)}
+
+/* ---------- navbar (floating glass pill, Chromium gets real refraction) ---------- */
+.navbar{top:14px;left:50%;transform:translateX(-50%);width:min(1100px,calc(100% - 28px));height:62px;
+  padding:0 24px;border-radius:999px;background:rgba(255,236,220,.07)}
+@supports (backdrop-filter:url(#liquid)){.navbar{backdrop-filter:blur(6px) url(#liquid) saturate(1.7)}}
+.available-badge,.btn-outline{border-radius:999px}
+
+/* ---------- buttons ---------- */
+.btn-primary{background:#e9b04b;color:#1b1208;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 12px 30px rgba(233,176,75,.22)}
+.btn-primary:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 16px 40px rgba(233,176,75,.4)}
+
+/* ---------- hero ---------- */
+.hero h1 span{background:linear-gradient(110deg,#fff,#f0c673,#e9b04b);background-size:200%;
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.profile-glow{background:radial-gradient(circle,rgba(184,40,63,.45),transparent 65%)}
+.profile-image{background:#1a1210;border-color:rgba(255,236,220,.28);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 50px rgba(255,255,255,.04),0 30px 100px rgba(0,0,0,.6)}
+.profile-image::before{background:linear-gradient(135deg,rgba(233,176,75,.22),transparent 50%)}
+.profile-orbit{border-color:rgba(233,176,75,.3)}
+.orbit-2{border-color:rgba(184,40,63,.35)}
+.floating-tag,.code-card{border-radius:14px}
+.floating-tag{border-radius:999px;padding:9px 16px;color:var(--white)}
+.code-card code{color:#d9cfc4}
+.code-header span{background:rgba(255,236,220,.3)}
+.marquee-wrapper{border-radius:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 0 -1px 0 rgba(255,255,255,.06)}
+.marquee-wrapper::before,.marquee-wrapper::after{display:none}
+
+/* ---------- cards ---------- */
+.stat-card,.tech-card,.project-card,.education-content{border-radius:24px}
+.experience-card{border-radius:28px}
+.stat-card:hover,.tech-card:hover{background:rgba(255,236,220,.1)}
+.project-card:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 30px 60px -16px rgba(0,0,0,.65)}
+.skill-bar{border-radius:3px;height:4px}
+.skill-progress{background:linear-gradient(90deg,#b8283f,#e9b04b);border-radius:3px}
+.education-badge{background:rgba(233,176,75,.14)}
+.interest:hover{background:rgba(233,176,75,.06)}
+.project-overlay a{border-radius:999px;padding:7px 13px}
+
+/* ---------- project previews ---------- */
+.project-image{margin:8px 8px 0;border-radius:18px}
+.project-health{background:radial-gradient(circle at 50% 50%,rgba(233,176,75,.3),transparent 55%),#1b120d}
+.project-python{background:radial-gradient(circle,rgba(184,40,63,.38),transparent 58%),#170e0f}
+.project-todo{background:radial-gradient(circle at 30% 70%,rgba(26,90,99,.5),transparent 55%),#120e0e}
+.project-portfolio{background:radial-gradient(circle at 70% 30%,rgba(233,176,75,.22),transparent 55%),#1a1011}
+.mockup{background:#241a17}.mockup div{background:#372a26}.mockup div:first-child{background:var(--purple)}
+.python-symbol{border-color:rgba(233,176,75,.45);box-shadow:0 0 70px rgba(184,40,63,.3)}
+.portfolio-preview{background:rgba(14,10,11,.7)}
+
+/* ---------- mobile ---------- */
+@media(max-width:750px){
+  nav{top:70px;border-radius:24px;background:rgba(20,14,14,.85);
+      -webkit-backdrop-filter:blur(22px) saturate(1.6);backdrop-filter:blur(22px) saturate(1.6);
+      border:1px solid var(--border)}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}
+}
+
+/* spacing between the education entries */
+.education-item+.education-item{margin-top:25px}
